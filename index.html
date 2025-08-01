@@ -1,156 +1,117 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
+    <script src="https://fpyf8.com/88/tag.min.js" data-zone="160468" async data-cfasync="false"></script>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لعبة الثعبان المتقدمة</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>لعبة الثعبان للجوال</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            touch-action: manipulation;
         }
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
-            min-height: 100vh;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: #fff;
+            direction: rtl;
+            overflow: hidden;
+        }
+        
+        .header {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            text-align: center;
+            border-bottom: 2px solid #ffcc00;
+        }
+        
+        .title {
+            font-size: 1.5rem;
+            color: #ffcc00;
+            margin-bottom: 5px;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            padding: 5px 0;
+        }
+        
+        .stat-box {
+            background: rgba(255, 204, 0, 0.15);
+            padding: 8px 12px;
+            border-radius: 20px;
+            text-align: center;
+            min-width: 80px;
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+        
+        .stat-value {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #ffcc00;
+        }
+        
+        .game-container {
+            flex: 1;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
-            color: #fff;
-            direction: rtl;
-        }
-        
-        .container {
-            background: rgba(0, 0, 0, 0.85);
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-            width: 100%;
-            max-width: 1000px;
-            overflow: hidden;
-            border: 3px solid #ffcc00;
-        }
-        
-        header {
-            background: linear-gradient(to right, #ff9900, #ff6600);
-            padding: 20px;
-            text-align: center;
-            position: relative;
-        }
-        
-        h1 {
-            font-size: 2.8rem;
-            color: #fff;
-            text-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
-            margin-bottom: 10px;
-        }
-        
-        .subtitle {
-            font-size: 1.2rem;
-            opacity: 0.9;
-        }
-        
-        .main-content {
-            display: flex;
-            flex-wrap: wrap;
-            padding: 20px;
-            gap: 20px;
-        }
-        
-        .game-area {
-            flex: 1;
-            min-width: 300px;
+            padding: 10px;
         }
         
         #gameCanvas {
             background: #000;
             border: 3px solid #ffcc00;
             border-radius: 10px;
-            width: 100%;
-            display: block;
+            max-width: 100%;
+            max-height: 70vh;
+            aspect-ratio: 1/1;
         }
         
-        .controls-panel {
-            flex: 1;
-            min-width: 300px;
-            background: rgba(30, 30, 40, 0.8);
-            border-radius: 15px;
-            padding: 25px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            border: 2px solid #ff9900;
+        .controls-bottom {
+            background: rgba(0, 0, 0, 0.85);
+            padding: 15px 10px;
+            border-top: 2px solid #ffcc00;
         }
         
-        .panel-section {
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 12px;
-            padding: 20px;
-            border: 1px solid #444;
-        }
-        
-        .section-title {
-            color: #ffcc00;
-            font-size: 1.4rem;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
+        .main-buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
             gap: 10px;
-        }
-        
-        .section-title i {
-            font-size: 1.2em;
-        }
-        
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
             margin-bottom: 15px;
-        }
-        
-        .stat-box {
-            background: rgba(255, 204, 0, 0.15);
-            padding: 15px;
-            border-radius: 10px;
-            text-align: center;
-        }
-        
-        .stat-label {
-            font-size: 0.9rem;
-            opacity: 0.8;
-            margin-bottom: 5px;
-        }
-        
-        .stat-value {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #ffcc00;
-        }
-        
-        .buttons-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
         }
         
         .btn {
             background: linear-gradient(to bottom, #ffcc00, #ff9900);
             color: #000;
             border: none;
-            padding: 14px;
-            font-size: 1.1rem;
+            padding: 12px 5px;
+            font-size: 0.9rem;
             border-radius: 50px;
             cursor: pointer;
             font-weight: bold;
             transition: all 0.3s;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            min-height: 60px;
+        }
+        
+        .btn i {
+            font-size: 1.4rem;
+            margin-bottom: 5px;
         }
         
         .btn:hover {
@@ -177,333 +138,199 @@
             color: white;
         }
         
-        .btn-sm {
-            padding: 10px;
-            font-size: 0.9rem;
+        .arrow-controls {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 10px;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+        
+        .arrow-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: 2px solid #ffcc00;
+            border-radius: 10px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.8rem;
+            color: #ffcc00;
+        }
+        
+        .arrow-btn.up {
+            grid-column: 2;
+            grid-row: 1;
+        }
+        
+        .arrow-btn.left {
+            grid-column: 1;
+            grid-row: 2;
+        }
+        
+        .arrow-btn.down {
+            grid-column: 2;
+            grid-row: 2;
+        }
+        
+        .arrow-btn.right {
+            grid-column: 3;
+            grid-row: 2;
         }
         
         .ad-section {
             background: linear-gradient(45deg, #ff8c00, #ff2d55);
-            border-radius: 12px;
-            padding: 20px;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
             text-align: center;
             display: none;
         }
         
         .ad-content {
             background: rgba(0, 0, 0, 0.3);
-            padding: 20px;
+            padding: 15px;
             border-radius: 10px;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
         
         .ad-text {
-            font-size: 1.3rem;
-            margin-bottom: 15px;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
             font-weight: bold;
         }
         
         .ad-timer {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             background: rgba(0, 0, 0, 0.5);
-            padding: 10px;
+            padding: 8px 15px;
             border-radius: 50px;
             display: inline-block;
-            min-width: 50px;
         }
         
-        .options-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
-        
-        .option-item {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 15px;
-            border-radius: 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        .option-title {
-            font-size: 1rem;
-            margin-bottom: 10px;
-            color: #ffcc00;
-        }
-        
-        .slider-container {
-            width: 100%;
-        }
-        
-        .slider {
-            width: 100%;
-            height: 10px;
-            background: #444;
-            border-radius: 5px;
-            outline: none;
-        }
-        
-        .slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 20px;
-            height: 20px;
-            background: #ffcc00;
-            border-radius: 50%;
-            cursor: pointer;
-        }
-        
-        .theme-selector {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            margin-top: 10px;
-        }
-        
-        .theme {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            cursor: pointer;
-            border: 2px solid transparent;
-        }
-        
-        .theme.active {
-            border-color: white;
-        }
-        
-        .theme-1 { background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d); }
-        .theme-2 { background: linear-gradient(135deg, #1e3c72, #2a5298); }
-        .theme-3 { background: linear-gradient(135deg, #4776E6, #8E54E9); }
-        .theme-4 { background: linear-gradient(135deg, #134E5E, #71B280); }
-        
-        .snake-icon {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            background: #4CAF50;
-            margin-left: 5px;
-        }
-        
-        .food-icon {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            background: #FF5252;
-            border-radius: 50%;
-            margin-left: 5px;
-        }
-        
-        .instructions {
-            margin-top: 15px;
-            padding: 15px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
-            font-size: 0.9rem;
-            line-height: 1.6;
-        }
-        
-        .instructions ul {
-            padding-right: 20px;
-            margin-top: 10px;
-        }
-        
-        .instructions li {
-            margin-bottom: 8px;
-        }
-        
-        .key-controls {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 15px;
-        }
-        
-        .key-row {
-            display: flex;
-            margin-bottom: 5px;
-        }
-        
-        .key {
-            width: 50px;
-            height: 50px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid #ffcc00;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 5px;
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-        
-        footer {
-            text-align: center;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.5);
-            font-size: 0.9rem;
-            color: #aaa;
-        }
-        
-        @media (max-width: 768px) {
-            .main-content {
-                flex-direction: column;
+        @media (max-height: 700px) {
+            .header {
+                padding: 5px;
             }
             
-            h1 {
-                font-size: 2.2rem;
+            .title {
+                font-size: 1.2rem;
             }
             
-            .buttons-grid {
-                grid-template-columns: 1fr;
+            .stat-box {
+                padding: 5px 8px;
+                min-width: 70px;
+            }
+            
+            .stat-label {
+                font-size: 0.7rem;
+            }
+            
+            .stat-value {
+                font-size: 1.2rem;
+            }
+            
+            .btn {
+                padding: 8px 3px;
+                font-size: 0.8rem;
+                min-height: 50px;
+            }
+            
+            .btn i {
+                font-size: 1.2rem;
+            }
+            
+            .arrow-btn {
+                height: 50px;
+                font-size: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            .main-buttons {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .btn {
+                font-size: 0.8rem;
             }
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1><i class="fas fa-snake"></i> لعبة الثعبان المتقدمة</h1>
-            <div class="subtitle">إصدارة خاصة مع خيارات متعددة وميزات إضافية</div>
-        </header>
-        
-        <div class="main-content">
-            <div class="game-area">
-                <canvas id="gameCanvas" width="500" height="500"></canvas>
+    <div class="header">
+        <div class="title">🐍 لعبة الثعبان للجوال</div>
+        <div class="stats">
+            <div class="stat-box">
+                <div class="stat-label">النقاط</div>
+                <div id="score" class="stat-value">0</div>
             </div>
-            
-            <div class="controls-panel">
-                <div class="panel-section">
-                    <h2 class="section-title"><i class="fas fa-chart-line"></i> الإحصائيات</h2>
-                    <div class="stats">
-                        <div class="stat-box">
-                            <div class="stat-label">النقاط</div>
-                            <div id="score" class="stat-value">0</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-label">الأعلى</div>
-                            <div id="highScore" class="stat-value">0</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-label">الحياة</div>
-                            <div id="lives" class="stat-value">3</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-label">المستوى</div>
-                            <div id="level" class="stat-value">1</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="panel-section">
-                    <h2 class="section-title"><i class="fas fa-gamepad"></i> تحكم اللعبة</h2>
-                    <div class="buttons-grid">
-                        <button id="startBtn" class="btn btn-primary">
-                            <i class="fas fa-play"></i> بدء اللعبة
-                        </button>
-                        <button id="pauseBtn" class="btn btn-secondary">
-                            <i class="fas fa-pause"></i> إيقاف/متابعة
-                        </button>
-                        <button id="restartBtn" class="btn btn-warning">
-                            <i class="fas fa-redo"></i> إعادة تشغيل
-                        </button>
-                        <button id="helpBtn" class="btn btn-secondary">
-                            <i class="fas fa-question-circle"></i> المساعدة
-                        </button>
-                    </div>
-                    
-                    <div class="key-controls">
-                        <div class="key-row">
-                            <div class="key"><i class="fas fa-arrow-up"></i></div>
-                        </div>
-                        <div class="key-row">
-                            <div class="key"><i class="fas fa-arrow-left"></i></div>
-                            <div class="key"><i class="fas fa-arrow-down"></i></div>
-                            <div class="key"><i class="fas fa-arrow-right"></i></div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="panel-section">
-                    <h2 class="section-title"><i class="fas fa-cogs"></i> الخيارات المتقدمة</h2>
-                    <div class="options-grid">
-                        <div class="option-item">
-                            <div class="option-title">سرعة اللعبة</div>
-                            <div class="slider-container">
-                                <input type="range" min="50" max="300" value="120" class="slider" id="speedSlider">
-                            </div>
-                            <div id="speedValue" class="stat-value">متوسط</div>
-                        </div>
-                        <div class="option-item">
-                            <div class="option-title">صعوبة اللعبة</div>
-                            <div class="slider-container">
-                                <input type="range" min="1" max="3" value="1" class="slider" id="difficultySlider">
-                            </div>
-                            <div id="difficultyValue" class="stat-value">سهل</div>
-                        </div>
-                        <div class="option-item">
-                            <div class="option-title">السمة اللونية</div>
-                            <div class="theme-selector">
-                                <div class="theme theme-1 active"></div>
-                                <div class="theme theme-2"></div>
-                                <div class="theme theme-3"></div>
-                                <div class="theme theme-4"></div>
-                            </div>
-                        </div>
-                        <div class="option-item">
-                            <div class="option-title">مظهر الثعبان</div>
-                            <select id="snakeSkin" class="btn btn-sm">
-                                <option value="classic">كلاسيكي</option>
-                                <option value="modern">حديث</option>
-                                <option value="retro">ريترو</option>
-                                <option value="rainbow">قوس قزح</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="ad-section" id="adContainer">
-                    <div class="ad-content">
-                        <div class="ad-text">شاهد هذا الإعلان لتحصل على حياة إضافية!</div>
-                        <div class="ad-timer" id="adTimer">5</div>
-                    </div>
-                    <button id="adBtn" class="btn btn-secondary">
-                        <i class="fas fa-ad"></i> شاهد الإعلان الآن
-                    </button>
-                </div>
-                
-                <div class="panel-section">
-                    <h2 class="section-title"><i class="fas fa-info-circle"></i> تعليمات اللعبة</h2>
-                    <div class="instructions">
-                        <p>استخدم مفاتيح الأسهم للتحكم في اتجاه الثعبان:</p>
-                        <ul>
-                            <li>كلما أكلت المزيد من الطعام <span class="food-icon"></span>، يزداد طولك</li>
-                            <li>تجنب الاصطدام بالجدران أو بجسمك</li>
-                            <li>عند الخسارة، يمكنك مشاهدة إعلان لتحصل على حياة إضافية</li>
-                            <li>كل إعلان تشاهده يعطيك حياة إضافية</li>
-                            <li>يمكنك تعديل سرعة اللعبة ومستوى الصعوبة في خيارات اللعبة</li>
-                        </ul>
-                    </div>
-                </div>
+            <div class="stat-box">
+                <div class="stat-label">الأعلى</div>
+                <div id="highScore" class="stat-value">0</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">الحياة</div>
+                <div id="lives" class="stat-value">3</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="game-container">
+        <canvas id="gameCanvas"></canvas>
+    </div>
+    
+    <div class="controls-bottom">
+        <div class="main-buttons">
+            <button id="startBtn" class="btn btn-primary">
+                <i class="fas fa-play"></i> بدء
+            </button>
+            <button id="pauseBtn" class="btn btn-secondary">
+                <i class="fas fa-pause"></i> إيقاف
+            </button>
+            <button id="restartBtn" class="btn btn-warning">
+                <i class="fas fa-redo"></i> إعادة
+            </button>
+            <button id="helpBtn" class="btn btn-secondary">
+                <i class="fas fa-question"></i> مساعدة
+            </button>
+        </div>
+        
+        <div class="arrow-controls">
+            <div class="arrow-btn up" id="upBtn">
+                <i class="fas fa-arrow-up"></i>
+            </div>
+            <div class="arrow-btn left" id="leftBtn">
+                <i class="fas fa-arrow-left"></i>
+            </div>
+            <div class="arrow-btn down" id="downBtn">
+                <i class="fas fa-arrow-down"></i>
+            </div>
+            <div class="arrow-btn right" id="rightBtn">
+                <i class="fas fa-arrow-right"></i>
             </div>
         </div>
         
-        <footer>
-            <p>لعبة الثعبان المتقدمة - إصدار 2.0 | تم التطوير باستخدام HTML5 و JavaScript</p>
-            <p>جميع الحقوق محفوظة &copy; 2023</p>
-        </footer>
+        <div class="ad-section" id="adContainer">
+            <div class="ad-content">
+                <div class="ad-text">شاهد إعلانًا لتحصل على حياة إضافية!</div>
+                <div class="ad-timer" id="adTimer">5</div>
+            </div>
+            <button id="adBtn" class="btn btn-secondary" style="width:100%;">
+                <i class="fas fa-ad"></i> شاهد الإعلان الآن
+            </button>
+        </div>
     </div>
 
     <script>
-        // عناصر DOM
+        // تهيئة عناصر DOM
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
         const scoreElement = document.getElementById('score');
         const highScoreElement = document.getElementById('highScore');
         const livesElement = document.getElementById('lives');
-        const levelElement = document.getElementById('level');
         const startBtn = document.getElementById('startBtn');
         const pauseBtn = document.getElementById('pauseBtn');
         const restartBtn = document.getElementById('restartBtn');
@@ -511,16 +338,15 @@
         const adContainer = document.getElementById('adContainer');
         const adBtn = document.getElementById('adBtn');
         const adTimer = document.getElementById('adTimer');
-        const speedSlider = document.getElementById('speedSlider');
-        const speedValue = document.getElementById('speedValue');
-        const difficultySlider = document.getElementById('difficultySlider');
-        const difficultyValue = document.getElementById('difficultyValue');
-        const snakeSkin = document.getElementById('snakeSkin');
-        const themes = document.querySelectorAll('.theme');
+        const upBtn = document.getElementById('upBtn');
+        const downBtn = document.getElementById('downBtn');
+        const leftBtn = document.getElementById('leftBtn');
+        const rightBtn = document.getElementById('rightBtn');
         
         // إعدادات اللعبة
         const gridSize = 20;
-        const tileCount = canvas.width / gridSize;
+        let tileCount;
+        let canvasSize;
         let snake = [];
         let food = {};
         let dx = 0;
@@ -528,21 +354,38 @@
         let score = 0;
         let highScore = localStorage.getItem('snakeHighScore') || 0;
         let lives = 3;
-        let level = 1;
-        let gameSpeed = 120;
+        let gameSpeed = 150;
         let gameInterval;
         let gameRunning = false;
         let gamePaused = false;
         let adCountdown;
-        let currentTheme = 1;
-        let snakeAppearance = 'classic';
+        
+        // تهيئة حجم اللوحة
+        function initCanvasSize() {
+            const container = document.querySelector('.game-container');
+            const size = Math.min(container.clientWidth, container.clientHeight * 0.8);
+            canvas.width = size;
+            canvas.height = size;
+            canvasSize = size;
+            tileCount = Math.floor(canvasSize / gridSize);
+            
+            // إعادة تعيين اللعبة إذا كانت قيد التشغيل
+            if (gameRunning) {
+                resetGame();
+            } else {
+                drawGame();
+            }
+        }
         
         // تهيئة اللعبة
         function init() {
-            // عرض النتيجة القياسية
+            // تعيين حجم اللوحة
+            initCanvasSize();
+            window.addEventListener('resize', initCanvasSize);
+            
+            // تعيين النتيجة القياسية
             highScoreElement.textContent = highScore;
             livesElement.textContent = lives;
-            levelElement.textContent = level;
             
             // تعيين أحداث الأزرار
             startBtn.addEventListener('click', startGame);
@@ -551,17 +394,13 @@
             helpBtn.addEventListener('click', showHelp);
             adBtn.addEventListener('click', showAd);
             
-            // أحداث المنزلقات
-            speedSlider.addEventListener('input', updateSpeed);
-            difficultySlider.addEventListener('input', updateDifficulty);
-            snakeSkin.addEventListener('change', updateSnakeAppearance);
+            // تعيين أحداث أزرار الأسهم
+            upBtn.addEventListener('click', () => changeDirection(0, -1));
+            downBtn.addEventListener('click', () => changeDirection(0, 1));
+            leftBtn.addEventListener('click', () => changeDirection(-1, 0));
+            rightBtn.addEventListener('click', () => changeDirection(1, 0));
             
-            // أحداث السمات اللونية
-            themes.forEach(theme => {
-                theme.addEventListener('click', changeTheme);
-            });
-            
-            // معالجة الضغط على الأزرار
+            // معالجة ضغطات المفاتيح للوحة المفاتيح
             document.addEventListener('keydown', handleKeyPress);
             
             // تهيئة اللوحة
@@ -577,6 +416,7 @@
             gamePaused = false;
             startBtn.disabled = true;
             pauseBtn.textContent = "إيقاف";
+            pauseBtn.innerHTML = '<i class="fas fa-pause"></i> إيقاف';
             adContainer.style.display = "none";
             
             gameInterval = setInterval(gameLoop, gameSpeed);
@@ -595,9 +435,9 @@
         function resetGame() {
             // تهيئة الثعبان
             snake = [
-                {x: 10, y: 10},
-                {x: 9, y: 10},
-                {x: 8, y: 10}
+                {x: Math.floor(tileCount/2), y: Math.floor(tileCount/2)},
+                {x: Math.floor(tileCount/2)-1, y: Math.floor(tileCount/2)},
+                {x: Math.floor(tileCount/2)-2, y: Math.floor(tileCount/2)}
             ];
             
             // تهيئة الطعام
@@ -610,8 +450,6 @@
             // إعادة تعيين النتيجة
             score = 0;
             scoreElement.textContent = score;
-            level = 1;
-            levelElement.textContent = level;
             lives = 3;
             livesElement.textContent = lives;
         }
@@ -654,18 +492,6 @@
                 
                 // توليد طعام جديد
                 generateFood();
-                
-                // زيادة المستوى كل 50 نقطة
-                if (score % 50 === 0) {
-                    level++;
-                    levelElement.textContent = level;
-                    
-                    // زيادة السرعة مع زيادة المستوى
-                    clearInterval(gameInterval);
-                    gameSpeed = Math.max(50, gameSpeed - 10);
-                    gameInterval = setInterval(gameLoop, gameSpeed);
-                    updateSpeedValue();
-                }
             } else {
                 // إزالة الذيل إذا لم يأكل
                 snake.pop();
@@ -747,44 +573,70 @@
             
             // رسم الثعبان
             snake.forEach((segment, index) => {
-                let color;
-                
-                // اختيار لون الثعبان حسب المظهر المختار
-                switch(snakeAppearance) {
-                    case 'modern':
-                        color = index === 0 ? '#4CAF50' : '#8BC34A';
-                        break;
-                    case 'retro':
-                        color = index === 0 ? '#00FF00' : '#00CC00';
-                        break;
-                    case 'rainbow':
-                        const hue = (index * 10) % 360;
-                        color = `hsl(${hue}, 100%, 50%)`;
-                        break;
-                    default: // كلاسيكي
-                        color = index === 0 ? '#FF5722' : '#FF9800';
-                }
-                
-                ctx.fillStyle = color;
-                ctx.fillRect(segment.x * gridSize, segment.y * gridSize, gridSize - 1, gridSize - 1);
+                ctx.fillStyle = index === 0 ? '#4CAF50' : '#8BC34A';
+                ctx.fillRect(
+                    segment.x * gridSize, 
+                    segment.y * gridSize, 
+                    gridSize - 1, 
+                    gridSize - 1
+                );
                 
                 // رسم العيون للرأس
                 if (index === 0) {
                     ctx.fillStyle = '#000';
-                    // العيون تعتمد على الاتجاه
-                    const eyeSize = 4;
+                    const eyeSize = 3;
                     if (dx === 1) { // يمين
-                        ctx.fillRect((segment.x * gridSize) + gridSize - 8, (segment.y * gridSize) + 6, eyeSize, eyeSize);
-                        ctx.fillRect((segment.x * gridSize) + gridSize - 8, (segment.y * gridSize) + gridSize - 10, eyeSize, eyeSize);
+                        ctx.fillRect(
+                            (segment.x * gridSize) + gridSize - 7, 
+                            (segment.y * gridSize) + 5, 
+                            eyeSize, 
+                            eyeSize
+                        );
+                        ctx.fillRect(
+                            (segment.x * gridSize) + gridSize - 7, 
+                            (segment.y * gridSize) + gridSize - 9, 
+                            eyeSize, 
+                            eyeSize
+                        );
                     } else if (dx === -1) { // يسار
-                        ctx.fillRect((segment.x * gridSize) + 4, (segment.y * gridSize) + 6, eyeSize, eyeSize);
-                        ctx.fillRect((segment.x * gridSize) + 4, (segment.y * gridSize) + gridSize - 10, eyeSize, eyeSize);
+                        ctx.fillRect(
+                            (segment.x * gridSize) + 4, 
+                            (segment.y * gridSize) + 5, 
+                            eyeSize, 
+                            eyeSize
+                        );
+                        ctx.fillRect(
+                            (segment.x * gridSize) + 4, 
+                            (segment.y * gridSize) + gridSize - 9, 
+                            eyeSize, 
+                            eyeSize
+                        );
                     } else if (dy === 1) { // أسفل
-                        ctx.fillRect((segment.x * gridSize) + 6, (segment.y * gridSize) + gridSize - 8, eyeSize, eyeSize);
-                        ctx.fillRect((segment.x * gridSize) + gridSize - 10, (segment.y * gridSize) + gridSize - 8, eyeSize, eyeSize);
+                        ctx.fillRect(
+                            (segment.x * gridSize) + 5, 
+                            (segment.y * gridSize) + gridSize - 7, 
+                            eyeSize, 
+                            eyeSize
+                        );
+                        ctx.fillRect(
+                            (segment.x * gridSize) + gridSize - 9, 
+                            (segment.y * gridSize) + gridSize - 7, 
+                            eyeSize, 
+                            eyeSize
+                        );
                     } else { // فوق
-                        ctx.fillRect((segment.x * gridSize) + 6, (segment.y * gridSize) + 4, eyeSize, eyeSize);
-                        ctx.fillRect((segment.x * gridSize) + gridSize - 10, (segment.y * gridSize) + 4, eyeSize, eyeSize);
+                        ctx.fillRect(
+                            (segment.x * gridSize) + 5, 
+                            (segment.y * gridSize) + 4, 
+                            eyeSize, 
+                            eyeSize
+                        );
+                        ctx.fillRect(
+                            (segment.x * gridSize) + gridSize - 9, 
+                            (segment.y * gridSize) + 4, 
+                            eyeSize, 
+                            eyeSize
+                        );
                     }
                 }
             });
@@ -795,7 +647,7 @@
             ctx.arc(
                 food.x * gridSize + gridSize/2, 
                 food.y * gridSize + gridSize/2, 
-                gridSize/2 - 1, 
+                gridSize/2 - 2, 
                 0, 
                 Math.PI * 2
             );
@@ -803,21 +655,27 @@
             
             // تأثيرات الطعام
             ctx.strokeStyle = '#FF9800';
-            ctx.lineWidth = 2;
+            ctx.lineWidth = 1.5;
             ctx.beginPath();
             ctx.arc(
                 food.x * gridSize + gridSize/2, 
                 food.y * gridSize + gridSize/2, 
-                gridSize/2 + 3, 
+                gridSize/2 + 2, 
                 0, 
                 Math.PI * 2
             );
             ctx.stroke();
+        }
+        
+        // تغيير اتجاه الثعبان
+        function changeDirection(newDx, newDy) {
+            if (!gameRunning || gamePaused) return;
             
-            // رسم الحدود
-            ctx.strokeStyle = '#ffcc00';
-            ctx.lineWidth = 3;
-            ctx.strokeRect(0, 0, canvas.width, canvas.height);
+            // منع الانعكاس المباشر
+            if ((dx !== 0 && newDx !== 0) || (dy !== 0 && newDy !== 0)) return;
+            
+            dx = newDx;
+            dy = newDy;
         }
         
         // معالجة ضغطات المفاتيح
@@ -826,28 +684,16 @@
             
             switch(e.key) {
                 case 'ArrowUp':
-                    if (dy === 0) {
-                        dx = 0;
-                        dy = -1;
-                    }
+                    changeDirection(0, -1);
                     break;
                 case 'ArrowDown':
-                    if (dy === 0) {
-                        dx = 0;
-                        dy = 1;
-                    }
+                    changeDirection(0, 1);
                     break;
                 case 'ArrowLeft':
-                    if (dx === 0) {
-                        dx = -1;
-                        dy = 0;
-                    }
+                    changeDirection(-1, 0);
                     break;
                 case 'ArrowRight':
-                    if (dx === 0) {
-                        dx = 1;
-                        dy = 0;
-                    }
+                    changeDirection(1, 0);
                     break;
                 case ' ':
                     togglePause();
@@ -860,7 +706,11 @@
             if (!gameRunning) return;
             
             gamePaused = !gamePaused;
-            pauseBtn.innerHTML = gamePaused ? '<i class="fas fa-play"></i> متابعة' : '<i class="fas fa-pause"></i> إيقاف';
+            if (gamePaused) {
+                pauseBtn.innerHTML = '<i class="fas fa-play"></i> متابعة';
+            } else {
+                pauseBtn.innerHTML = '<i class="fas fa-pause"></i> إيقاف';
+            }
         }
         
         // عرض الإعلان المكافئ
@@ -877,7 +727,7 @@
                 adContainer.style.display = "none";
                 
                 // منح مكافأة (حياة إضافية)
-                lives++;
+                lives = 1;
                 livesElement.textContent = lives;
                 
                 // بدء لعبة جديدة
@@ -891,90 +741,20 @@
                 // محاكاة عرض الإعلان لمدة 3 ثواني
                 setTimeout(() => {
                     // تنفيذ مكافأة المستخدم
-                    alert('تهانينا! لقد حصلت على حياة إضافية لمشاهدتك الإعلان.');
+                    alert('لقد حصلت على حياة إضافية!');
                     resolve();
                 }, 3000);
             });
         }
         
-        // تحديث سرعة اللعبة
-        function updateSpeed() {
-            clearInterval(gameInterval);
-            gameSpeed = speedSlider.value;
-            
-            if (gameRunning) {
-                gameInterval = setInterval(gameLoop, gameSpeed);
-            }
-            
-            updateSpeedValue();
-        }
-        
-        // تحديث قيمة السرعة المعروضة
-        function updateSpeedValue() {
-            if (gameSpeed < 80) {
-                speedValue.textContent = "سريع جداً";
-            } else if (gameSpeed < 120) {
-                speedValue.textContent = "سريع";
-            } else if (gameSpeed < 180) {
-                speedValue.textContent = "متوسط";
-            } else {
-                speedValue.textContent = "بطيء";
-            }
-        }
-        
-        // تحديث مستوى الصعوبة
-        function updateDifficulty() {
-            const difficulty = difficultySlider.value;
-            
-            switch(difficulty) {
-                case '1':
-                    difficultyValue.textContent = "سهل";
-                    lives = 5;
-                    break;
-                case '2':
-                    difficultyValue.textContent = "متوسط";
-                    lives = 3;
-                    break;
-                case '3':
-                    difficultyValue.textContent = "صعب";
-                    lives = 1;
-                    break;
-            }
-            
-            livesElement.textContent = lives;
-        }
-        
-        // تغيير مظهر الثعبان
-        function updateSnakeAppearance() {
-            snakeAppearance = snakeSkin.value;
-            if (gameRunning) drawGame();
-        }
-        
-        // تغيير السمة اللونية
-        function changeTheme(e) {
-            themes.forEach(theme => theme.classList.remove('active'));
-            e.target.classList.add('active');
-            currentTheme = Array.from(themes).indexOf(e.target) + 1;
-            
-            // تغيير خلفية الجسم
-            const themesColors = [
-                'linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d)',
-                'linear-gradient(135deg, #1e3c72, #2a5298)',
-                'linear-gradient(135deg, #4776E6, #8E54E9)',
-                'linear-gradient(135deg, #134E5E, #71B280)'
-            ];
-            
-            document.body.style.background = themesColors[currentTheme - 1];
-        }
-        
         // عرض المساعدة
         function showHelp() {
             alert("تعليمات اللعبة:\n\n" +
-                  "1. استخدم مفاتيح الأسهم للتحكم في الثعبان\n" +
+                  "1. استخدم أزرار الأسهم للتحكم في الثعبان\n" +
                   "2. كل الطعام الأحمر لزيادة طولك ونقاطك\n" +
                   "3. تجنب الاصطدام بالجدران أو بجسمك\n" +
-                  "4. لديك عدة حياة، وعند فقدانها جميعاً يمكنك مشاهدة إعلان لاستعادة حياة\n" +
-                  "5. يمكنك تعديل سرعة اللعبة ومستوى الصعوبة في الخيارات المتقدمة");
+                  "4. لديك 3 حياة، وعند فقدانها جميعاً يمكنك مشاهدة إعلان لاستعادة حياة\n" +
+                  "5. استخدم زر الإيقاف/المتابعة لإيقاف اللعبة مؤقتاً");
         }
         
         // تهيئة اللعبة عند تحميل الصفحة
